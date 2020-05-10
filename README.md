@@ -1,2 +1,3 @@
-# leddit-frontend
-Projeto frontend que simula funcionalidades da rede social Reddit
+# <div align="center"> Leddit </div>
+
+Projeto frontend que simula as principais funcionalidades da rede social Reddit.

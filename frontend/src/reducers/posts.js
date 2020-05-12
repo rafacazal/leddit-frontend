@@ -5,7 +5,6 @@ const initialState = {
     
 }
 
-
 const posts = (state = initialState, action) => {
     switch(action.type) {
         case 'SET_ALL_POSTS':

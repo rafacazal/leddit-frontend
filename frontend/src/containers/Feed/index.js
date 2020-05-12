@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import PostCard from "../../components/PostCard";
 import { createPost, getAllPosts, votePost, setSelectedPostId } from "../../actions/post";
 import { logOut } from "../../actions/user";
@@ -65,13 +65,14 @@ class Feed extends Component {
   }
 
 
-  handleClickPost = (postId) => {
+  handleClickPost = (selectedPostId) => {
     const { setSelectedPostId, goToPostDetails } = this.props
 
-    setSelectedPostId(postId)
-    goToPostDetails()
+    setSelectedPostId(selectedPostId)
+    goToPostDetails(routes.postDetails)
   }
 
+  
   handleLoadingPage = () => {
     const { allPosts } = this.props
 
@@ -82,12 +83,13 @@ class Feed extends Component {
     }
   }
 
+
   render() {
     const { allPosts, votePost, goToLoginPage } = this.props
     return (
       <div>
         <Header onClick={goToLoginPage}>
-          <LogOutButton onClick={this.logOut}>Logout</LogOutButton>
+          <LogOutButton onClick={this.props.logOut}>Logout</LogOutButton>
         </Header>
 
         <FeedContainer>       
@@ -112,15 +114,15 @@ class Feed extends Component {
             allPosts.map(post => (
             <PostCard 
             key={post.id} 
-            onClick={() => this.handleClickPost(post.id)}
+            onClick={() => this.handleClickPost(post.selectedPostId)}
             positiveVote={() => votePost(+1, post.id)}
             negativeVote={() => votePost(-1, post.id)}
-            totalVotes={post.votesCount}
-            username={post.username}
+            totalVotes={post.votesQuantity}
+            username={post.author}
             title={post.title}
             content={post.text}
-            commentCount={post.commentsNumber}
-            voted={post.userVoteDirection}
+            commentCount={post.commentsQuantity}
+            voted={post.voteDirection}
             />
             ))}
         </FeedContainer>
@@ -142,7 +144,7 @@ const mapDispatchToProps = dispatch => ({
   getAllPosts: () => dispatch(getAllPosts()),
   votePost: (direction, postId) => dispatch(votePost(direction, postId)),
   goToPostDetails: () => dispatch(push(routes.postDetails)),
-  setSelectedPostId: (postId) => dispatch(setSelectedPostId(postId)),
+  setSelectedPostId: (selectedPostId) => dispatch(setSelectedPostId(selectedPostId)),
   logOut: () => dispatch(logOut())
 })
 

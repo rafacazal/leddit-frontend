@@ -75,7 +75,7 @@ class PostsDetails extends Component {
 
 
   render() {
-    const { postDetails, votePost, goToLoginPage } = this.props
+    const { postDetails, votePost } = this.props
 
     return (
       <div>

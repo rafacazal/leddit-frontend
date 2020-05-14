@@ -26,23 +26,23 @@ function PostCard(props) {
     return (
         <ContainerPostCard>
             <SideBar 
-            positiveVote={props.positiveVote} 
-            negativeVote={props.negativeVote} 
-            totalVotes={props.totalVotes}
-            voted={props.voted}
+                positiveVote={props.positiveVote} 
+                negativeVote={props.negativeVote} 
+                totalVotes={props.totalVotes}
+                voted={props.voted}
             />
             <PostHeader 
-            onClick={props.onClick}
-            username={props.username}
-            title={props.title} 
+                onClick={props.onClick}
+                username={props.username}
+                title={props.title} 
             />
             <PostContent
-            onClick={props.onClick}
-            content={props.content}
+                onClick={props.onClick}
+                content={props.content}
             /> 
             <PostFooter
-            onClick={props.onClick}
-            commentCount={props.commentCount}
+                onClick={props.onClick}
+                commentCount={props.commentCount}
             />
         </ContainerPostCard>
     );

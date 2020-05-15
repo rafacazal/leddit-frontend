@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getPostDetails, createComment, votePost, voteComment } from "../../actions/post";
+import { logOut } from "../../actions/user";
 import { push } from "connected-react-router";
 import { routes } from "../Router/index"
 import Header from "../../components/Header"
@@ -86,11 +87,11 @@ class PostsDetails extends Component {
         { this.handleLoadingPage() ? <LoadingPage/> :
         <PostDetailsContainer>
           <PostDetailsCard
-          key={postDetails && postDetails.postId} 
+          key={postDetails && postDetails.id} 
           positiveVote={() => votePost(+1, postDetails.id)}
           negativeVote={() => votePost(-1, postDetails.id)}
           totalVotes={postDetails && postDetails.votesQuantity}
-          username={postDetails && postDetails.userName}
+          username={postDetails && postDetails.author}
           title={postDetails && postDetails.title}
           content={postDetails && postDetails.text}
           voted={postDetails && postDetails.voteDirection}
@@ -144,6 +145,7 @@ const mapDispatchToProps = dispatch => ({
   createComment: (text, postId) => dispatch(createComment(text, postId)),
   votePost: (direction, postId) => dispatch(votePost(direction, postId)),
   voteComment: (direction, postId, commentId) => dispatch(voteComment(direction, postId, commentId)),
+  logOut: () => dispatch(logOut())
 })
 
 

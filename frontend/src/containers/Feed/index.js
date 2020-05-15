@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import PostCard from "../../components/PostCard";
 import { createPost, getAllPosts, votePost, setSelectedPostId } from "../../actions/post";
 import { logOut } from "../../actions/user";

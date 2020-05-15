@@ -14,7 +14,7 @@ const loginForm = [
   {
     name: "email",
     type: "email",
-    label: "E-mail",
+    label: "E-mail ",
     required: true
   },
   {
@@ -43,9 +43,11 @@ class LoginPage extends Component {
 
   sendLoginData = (event) => {
     event.preventDefault()
+
     const { email, password } = this.state.form;
     const { autenticateLogin } = this.props;
     autenticateLogin(email, password)
+
     this.setState({form: {}})
   }
 

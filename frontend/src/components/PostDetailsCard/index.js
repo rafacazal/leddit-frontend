@@ -26,20 +26,20 @@ function PostDetailsCard(props) {
     return (
         <ContainerPostDetailsCard>
             <SideBar 
-                positiveVote={props.positiveVote} 
-                negativeVote={props.negativeVote} 
-                totalVotes={props.totalVotes}
-                voted={props.voted}
+            positiveVote={props.positiveVote} 
+            negativeVote={props.negativeVote} 
+            totalVotes={props.totalVotes}
+            voted={props.voted}
             />
             <PostHeader 
-                username={props.username}
-                title={props.title} 
+            username={props.username}
+            title={props.title} 
             />
             <PostContent
-                content={props.content}
+            content={props.content}
             /> 
             <PostFooter
-                commentCount={props.commentCount}
+            commentCount={props.commentCount}
             />
             {props.children}
         </ContainerPostDetailsCard>

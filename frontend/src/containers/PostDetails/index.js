@@ -9,6 +9,7 @@ import PostComment from "../../components/PostComment";
 import CommentCard from "../../components/CommentCard"
 import { ContainerInput, TextField, CommentButton, PostDetailsContainer, ContainerComment } from "../../style/postDetails"
 import { LoadingPage } from '../../components/LoadingPage';
+import { LogOutButton } from "../../style/global";
 
 
 const commentForm = [
@@ -36,11 +37,10 @@ class PostsDetails extends Component {
 
     if (token === null) {
       goToLoginPage()
-    } else if (selectedPostId === "") {
+    } else if (selectedPostId === "" || undefined) {
       goToFeedPage()
     }
-
-    getPostDetails(selectedPostId)
+     getPostDetails(selectedPostId)
   }
 
 
@@ -75,24 +75,26 @@ class PostsDetails extends Component {
 
 
   render() {
-    const { postDetails, votePost, goToLoginPage } = this.props
+    const { postDetails, votePost } = this.props
 
     return (
       <div>
-        <Header onClick={goToLoginPage}></Header>
+        <Header onClick={this.props.goToFeedPage}>  
+        <LogOutButton onClick={this.props.logOut}>Logout</LogOutButton>
+        </Header>
         
         { this.handleLoadingPage() ? <LoadingPage/> :
         <PostDetailsContainer>
           <PostDetailsCard
-          key={postDetails && postDetails.id} 
+          key={postDetails && postDetails.postId} 
           positiveVote={() => votePost(+1, postDetails.id)}
           negativeVote={() => votePost(-1, postDetails.id)}
-          totalVotes={postDetails && postDetails.votesCount}
-          username={postDetails && postDetails.username}
+          totalVotes={postDetails && postDetails.votesQuantity}
+          username={postDetails && postDetails.userName}
           title={postDetails && postDetails.title}
           content={postDetails && postDetails.text}
-          voted={postDetails && postDetails.userVoteDirection}
-          commentCount={postDetails && postDetails.commentsNumber}
+          voted={postDetails && postDetails.voteDirection}
+          commentCount={postDetails && postDetails.commentsQuantity}
           >
             <PostComment onSubmit={this.sendCommentData}>
               {commentForm.map( input => (
@@ -114,10 +116,10 @@ class PostsDetails extends Component {
                 key={comment.id}
                 positiveVote={() => this.sendCommentVote(+1, postDetails.id, comment.id)}
                 negativeVote={() => this.sendCommentVote(-1, postDetails.id, comment.id)}
-                totalVotes={comment && comment.votesCount}
-                username={comment && comment.username}
+                totalVotes={comment && comment.votesQuantity}
+                username={comment && comment.userName}
                 content={comment && comment.text}
-                voted={comment && comment.userVoteDirection} 
+                voted={comment && comment.voteDirection} 
                 />
               ))}
             </ContainerComment>

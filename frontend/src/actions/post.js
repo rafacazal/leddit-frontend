@@ -1,7 +1,7 @@
 import axios from "axios";
  
 
-const baseURL = 'https://us-central1-missao-newton.cloudfunctions.net/fourEddit/posts'
+const baseURL = 'https://us-central1-leddit-4be86.cloudfunctions.net/app'
 
 
 export const createPost = (title, text) => async (dispatch) => {
@@ -13,13 +13,13 @@ export const createPost = (title, text) => async (dispatch) => {
         }
     };
     
-    const postData = {
-        text,
+    const body = {
         title,
+        text
     }
 
     try {
-        await axios.post(`${baseURL}`, postData, axiosConfig );
+        await axios.post(`${baseURL}/create/post`, body, axiosConfig );
 
         dispatch(getAllPosts());
     } catch(error) {
@@ -38,9 +38,9 @@ export const getAllPosts = () => async (dispatch) => {
     };
     
     try {
-        const response = await axios.get(`${baseURL}`,  axiosConfig );
+        const response = await axios.get(`${baseURL}/posts`,  axiosConfig );
 
-        dispatch(setAllPosts(response.data.posts));
+        dispatch(setAllPosts(response.data.result));
     } catch(error) {
         window.alert("Ocorreu um erro ao tentar acessar os posts do seu feed.");
     }
@@ -65,11 +65,11 @@ export const votePost = (direction, postId) => async (dispatch) => {
     };
 
     const voteData = {
-        direction
+        voteDirection: direction
     }
 
     try {
-        await axios.put(`${baseURL}/${postId}/vote`, voteData, axiosConfig );
+        await axios.put(`${baseURL}/posts/${postId}/vote`, voteData, axiosConfig );
         
         dispatch(getAllPosts());
         dispatch(getPostDetails(postId));
@@ -89,11 +89,11 @@ export const voteComment = (direction, postId, commentId) => async (dispatch) =>
     };
 
     const voteData = {
-        direction
+        voteDirection: direction
     }
 
     try {
-        await axios.put(`${baseURL}/${postId}/comment/${commentId}/vote`, voteData, axiosConfig );
+        await axios.put(`${baseURL}/posts/${postId}/comment/${commentId}/vote`, voteData, axiosConfig );
         
         dispatch(getPostDetails(postId));
     } catch(error) {
@@ -120,9 +120,10 @@ export const getPostDetails = (postId) => async (dispatch) => {
     };
     
     try {       
-        const response = await axios.get(`${baseURL}/${postId}`,  axiosConfig );
-
-        dispatch(setPostDetails(response.data.post));
+        const response = await axios.get(`${baseURL}/posts/${postId}`,  axiosConfig );
+        console.log(response)
+        dispatch(setPostDetails(response.data));
+        
     } catch(error) {
         window.alert("Ocorreu um erro ao tentar acessar os detalhes desse post.")
     }
@@ -151,7 +152,7 @@ export const createComment = (text, postId) => async (dispatch) => {
     }
 
     try {
-        await axios.post(`${baseURL}/${postId}/comment`, postInformation, axiosConfig );
+        await axios.post(`${baseURL}/posts/${postId}/comment`, postInformation, axiosConfig );
 
         dispatch(getPostDetails(postId));
     } catch(error) {

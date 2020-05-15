@@ -69,7 +69,7 @@ export const votePost = (direction, postId) => async (dispatch) => {
     }
 
     try {
-        await axios.put(`${baseURL}/posts/${postId}/vote`, voteData, axiosConfig );
+        await axios.post(`${baseURL}/posts/${postId}/vote`, voteData, axiosConfig );
         
         dispatch(getAllPosts());
         dispatch(getPostDetails(postId));
@@ -93,7 +93,7 @@ export const voteComment = (direction, postId, commentId) => async (dispatch) =>
     }
 
     try {
-        await axios.put(`${baseURL}/posts/${postId}/comment/${commentId}/vote`, voteData, axiosConfig );
+        await axios.post(`${baseURL}/posts/${postId}/comment/${commentId}/vote`, voteData, axiosConfig );
         
         dispatch(getPostDetails(postId));
     } catch(error) {
@@ -121,8 +121,8 @@ export const getPostDetails = (postId) => async (dispatch) => {
     
     try {       
         const response = await axios.get(`${baseURL}/posts/${postId}`,  axiosConfig );
-        console.log(response)
-        dispatch(setPostDetails(response.data));
+
+        dispatch(setPostDetails(response.data.result));
         
     } catch(error) {
         window.alert("Ocorreu um erro ao tentar acessar os detalhes desse post.")

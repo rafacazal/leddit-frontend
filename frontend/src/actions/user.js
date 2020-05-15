@@ -6,7 +6,6 @@ import { routes } from "../containers/Router";
 const baseURL = 'https://us-central1-leddit-4be86.cloudfunctions.net/app'
 
 
-
 export const autenticateLogin = (email, password) => async (dispatch) => {
     const loginInformation = {
         email,
@@ -47,27 +46,7 @@ export const createUser = (email, password, username) => async (dispatch) => {
     }
 }
 
-export const changePassword = (email) => async (dispatch) => {
-    const changeInformation = {
-        email
-    }
-
-    try {
-
-        await axios.post(`${baseURL}/password`, changeInformation);
-
-        window.alert("E-mail enviado. Acesse o link para redefinir sua senha.")
-
-        dispatch(push(routes.root))
-
-    } catch (error) {
-        window.alert("Ocorreu um erro ao tentar enviar e-mail")
-    }
-}
-
 export const logOut = () => async (dispatch) => {
-        window.localStorage.removeItem("token");
-        dispatch(push(routes.root))
-    }
-
-
+    window.localStorage.removeItem("token");
+    dispatch(push(routes.root))
+}

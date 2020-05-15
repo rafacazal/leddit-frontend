@@ -60,7 +60,6 @@ class Feed extends Component {
     const { title, text } = this.state.form;
     const { createPost } = this.props;
     createPost(title, text)
-
     this.setState({form: {}})
   }
 
@@ -114,11 +113,11 @@ class Feed extends Component {
             allPosts.map(post => (
             <PostCard 
             key={post.id} 
-            onClick={() => this.handleClickPost(post.selectedPostId)}
+            onClick={() => this.handleClickPost(post.id)}
             positiveVote={() => votePost(+1, post.id)}
             negativeVote={() => votePost(-1, post.id)}
             totalVotes={post.votesQuantity}
-            username={post.author}
+            username={post.authorName}
             title={post.title}
             content={post.text}
             commentCount={post.commentsQuantity}
